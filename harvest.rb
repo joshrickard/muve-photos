@@ -2,30 +2,23 @@ require 'rubygems'
 require 'bundler/setup'
 require 'flickraw'
 require 'google_drive'
-require 'twitter'
+require './twitter_harvest'
 require 'yaml'
 
 # load the config file - this should have all the access
 # keys for twitter, facebook, instagram and flickr
 config = YAML.load_file('config.yml')
 
-twitter = Twitter::REST::Client.new do |twitter_config|
-  twitter_config.consumer_key = config['twitter']['consumer_key']
-  twitter_config.consumer_secret = config['twitter']['consumer_secret']
-  twitter_config.access_token = config['twitter']['access_token']
-  twitter_config.access_token_secret = config['twitter']['access_token_secret']
-end
+twitter = TwitterHarvest.new(
+  config['twitter']['consumer_key'],
+  config['twitter']['consumer_secret'],
+  config['twitter']['access_token'],
+  config['twitter']['access_token_secret']
+)
 
-twitter_data = []
-%w(#vknp1).each do |hashtag|
-  puts "searching twitter..."
-  twitter.search("#{ hashtag } -rt", result_type: 'recent').each do |tweet|
-    puts "found tweet..."
-    row = { source: 'twitter', id: tweet.id, created: tweet.created_at, hashtag: hashtag, url: tweet.url.to_s }
-    row[:media_url] = tweet.media.first.media_url.to_s if tweet.media?
-    twitter_data << row
-  end
-end
+twitter_data = twitter.search('#vkpn1')
+
+
 
 # do we already have a refresh token?
 google_auth_token = nil
