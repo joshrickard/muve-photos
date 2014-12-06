@@ -1,14 +1,13 @@
 require 'twitter'
 
 class TwitterHarvest
-  def initialize(consumer_key, consumer_secret, access_token, access_secret)
+  def initialize(config)
     @twitter = Twitter::REST::Client.new do |twitter_config|
-      twitter_config.consumer_key = consumer_key
-      twitter_config.consumer_secret = consumer_secret
-      twitter_config.access_token = access_token
-      twitter_config.access_token_secret = access_secret
+      twitter_config.consumer_key = config['consumer_key']
+      twitter_config.consumer_secret = config['consumer_secret']
+      twitter_config.access_token = config['access_token']
+      twitter_config.access_token_secret = config['access_token_secret']
     end
-    p @twitter
   end
 
   def search(hashtags)
