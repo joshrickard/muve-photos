@@ -11,15 +11,13 @@ class TwitterHarvest
   end
 
   def search(hashtags)
-    return if hashtags.nil? || (hashtags == '')
+    return if hashtags.blank?
 
-    hashtags = [hashtags] if (! hashtags.is_a?(Array))
+    hashtags = [hashtags] unless hashtags.is_a?(Array)
 
     twitter_data = []
     hashtags.each do |hashtag|
-      puts "searching twitter..."
       @twitter.search("#{ hashtag } -rt", result_type: 'recent').each do |tweet|
-        puts "found tweet..."
         row = { source: 'twitter', id: tweet.id, created: tweet.created_at, hashtag: hashtag, url: tweet.url.to_s }
         row[:media_url] = tweet.media.first.media_url.to_s if tweet.media?
         twitter_data << row
