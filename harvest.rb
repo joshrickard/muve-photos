@@ -1,8 +1,8 @@
 require 'rubygems'
 require 'bundler/setup'
-require 'flickraw'
 require 'yaml'
 
+require './flickr_harvest'
 require './muve_spreadsheet'
 require './twitter_harvest'
 
@@ -11,10 +11,17 @@ require './twitter_harvest'
 config = YAML.load_file('config.yml')
 
 spreadsheet = MuveSpreadsheet.new( config['google'] )
+
+flickr = FlickrHarvest.new( config['flickr'] )
 twitter = TwitterHarvest.new( config['twitter'] )
 
-twitter_data = twitter.search('#vkpn1')
-twitter_data.each do |row|
+flickr_data = flickr.search('#vknp1')
+flickr_data.each do |row|
   spreadsheet.add_new_row( row )
 end
+
+#twitter_data = twitter.search('#vknp1')
+#twitter_data.each do |row|
+#  spreadsheet.add_new_row( row )
+#end
 
