@@ -1,7 +1,10 @@
 require 'google_drive'
+require './extensions'
 
 class MuveSpreadsheet
   def initialize(config)
+    @spreadsheet_key = config['spreadsheet_key']
+
     # do we already have a refresh token?
     google_auth_token = nil
     google_client = OAuth2::Client.new(
@@ -10,7 +13,7 @@ class MuveSpreadsheet
       { site: 'https://accounts.google.com', token_url: '/o/oauth2/token', authorize_url: '/o/oauth2/auth' }
     )
 
-    if (config['refresh_token'] || '') == ''
+    if config['refresh_token'].blank?
       google_auth_url = google_client.auth_code.authorize_url({
         redirect_uri: "urn:ietf:wg:oauth:2.0:oob",
         scope:  "https://docs.google.com/feeds/ " +
@@ -36,9 +39,9 @@ class MuveSpreadsheet
   end
 
   def add_new_row(row)
-    @worksheet ||= @google_session.spreadsheet_by_key( config['google']['spreadsheet_key'] ).worksheets[0]
+    @worksheet ||= @google_session.spreadsheet_by_key( @spreadsheet_key ).worksheets[0]
 
-    # TODO: check for duplicates
+    return if row[:media_url].blank? || is_duplicate?(row[:media_url])
 
     row_num = @worksheet.num_rows + 1
     @worksheet[row_num, 1] = row[:source]
@@ -47,9 +50,13 @@ class MuveSpreadsheet
     @worksheet[row_num, 4] = row[:hashtag]
     @worksheet[row_num, 5] = row[:url]
     @worksheet[row_num, 6] = row[:media_url]
-    @worksheet[row_num, 7] = ''
-    @worksheet[row_num, 8] = 'no'
+    @worksheet[row_num, 7] = 'no'
 
     @worksheet.save if @worksheet.dirty?
   end
+
+  private
+    def is_duplicate?(url)
+      (1..@worksheet.num_rows).detect {|i| @worksheet[i, 6] == url} != nil
+    end
 end
