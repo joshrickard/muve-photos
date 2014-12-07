@@ -1,4 +1,5 @@
 require 'twitter'
+require './extensions'
 
 class TwitterHarvest
   def initialize(config)
