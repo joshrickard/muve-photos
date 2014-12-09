@@ -6,6 +6,9 @@ google:
 flickr:
   key: ''
   secret: ''
+instagram:
+  client_id: ''
+  client_secret: ''
 twitter:
   consumer_key: ''
   consumer_secret: ''
