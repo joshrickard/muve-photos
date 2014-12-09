@@ -14,7 +14,9 @@ class FlickrHarvest
 
     flickr_data = []
     hashtags.each do |hashtag|
-    photos = flickr.photos.search(text: hashtag)
+      next if hashtag.blank?
+
+      photos = flickr.photos.search(text: "##{ hashtag }")
       photos.each do |photo|
         info = flickr.photos.getInfo(photo_id: photo.id)
         flickr_data << {

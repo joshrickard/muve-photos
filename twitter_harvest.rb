@@ -18,7 +18,9 @@ class TwitterHarvest
 
     twitter_data = []
     hashtags.each do |hashtag|
-      @twitter.search("#{ hashtag } -rt", result_type: 'recent').each do |tweet|
+      next if hashtag.blank?
+
+      @twitter.search("##{ hashtag } -rt", result_type: 'recent').each do |tweet|
         row = { source: 'twitter', id: tweet.id, created: tweet.created_at, hashtag: hashtag, url: tweet.url.to_s }
         row[:media_url] = tweet.media.first.media_url.to_s if tweet.media?
         twitter_data << row
