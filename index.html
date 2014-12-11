@@ -1,36 +1,20 @@
 <html>
-<head>
-	<script type="text/javascript" src="https://cdn.rawgit.com/jsoma/tabletop/master/src/tabletop.js"></script>
-</head>
-<body>
+  <head>
+	  <script type="text/javascript" src="https://cdn.rawgit.com/jsoma/tabletop/master/src/tabletop.js"></script>
+    <script type="text/javascript" src="muve-photos.js"></script>
+  </head>
+  <body>
 
-<script type="text/javascript">
-	var public_spreadsheet_url = "https://docs.google.com/spreadsheets/d/1N4BTn6knwNNNU8bC4l0ZtDVEB2uBPZ0zNgct2KwNxxI/pubhtml";
+  <div id="photos"></div>
+    <script type="text/javascript">
+      MuvePhotos.init({
+        container: "photos",
+        key: "1N4BTn6knwNNNU8bC4l0ZtDVEB2uBPZ0zNgct2KwNxxI",
+        hashtag: "vknp1",
+        styles: "padding: 4px; width: 250px; height: 250px;",
+        classes: "muve-photo"
+      });
+    </script>
 
-	window.onload = function() {
-		Tabletop.init({
-			key: public_spreadsheet_url,
-			callback: function(data, tabletop) { showInfo(data, "vknp1"); },
-			simpleSheet: true
-		});
-	}
-
-	function showInfo(data, hashtag) {
-		for (var i = 0; i < data.length; i++) {
-			console.log(data[i]);
-
-			// make sure the approved, hashtag, and mediaurl attributes are populated
-			if (! ("approved" in data[i]) || (! data[i].approved)) continue;
-			if (! ("hashtag" in data[i]) || (! data[i].hashtag)) continue;
-			if (! ("mediaurl" in data[i]) || (! data[i].mediaurl)) continue;
-
-			// only display the image if it is approved
-			if ((data[i].approved.toLowerCase() === "yes") && (data[i].hashtag.toLowerCase() === hashtag)) {
-				document.write("<div><img src='" + data[i].mediaurl + "'></div>");
-			}
-		};
-	}
-</script>
-
-</body>
+  </body>
 </html>
