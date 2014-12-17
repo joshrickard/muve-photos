@@ -30,7 +30,10 @@
 
 			  // only display the image if it is approved
 			  if ((data[i].approved.toLowerCase() === "yes") && (data[i].hashtag.toLowerCase() === hashtag)) {
-          container.innerHTML = container.innerHTML + "<img class='" + muve_photos.options.classes + "' style='" + muve_photos.options.styles + "' src='" + data[i].mediaurl + "'>";
+          container.innerHTML = container.innerHTML +
+            "<a href='" + data[i].mediaurl + "' target='_blank'>" +
+              "<img class='" + muve_photos.options.classes + "' style='" + muve_photos.options.styles + "' src='" + data[i].mediaurl + "'>" +
+            "</a>";
 			  }
 		  }
     }
