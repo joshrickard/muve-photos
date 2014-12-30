@@ -65,4 +65,4 @@ Step 6) Create a Google spreadsheet with the following columns: source, id, crea
 
 Step 7) Publish the Google spreadsheet to the web to make it read only to our javascript
 
-Step 7) Setup a scheduled task to execute aggregator/harvest.rb on a regular basis
+Step 8) Setup a scheduled task to execute aggregator/harvest.rb on a regular basis
