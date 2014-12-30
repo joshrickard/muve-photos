@@ -61,6 +61,8 @@ Step 4) Copy the aggregator/config.example.yml to aggregator/config.yml
 
 Step 5) Fill in all of the parameters in aggregator/config.yml - you will need to have accounts on all of the social media sites and go through the process of obtaining development keys
 
-Step 6) Create a Google spreadsheet with the following columns: source, id, created, hashtag, url, media_url, approved?
+Step 6) Create a Google spreadsheet with the following columns: source, id, created, hashtag, url, media_url, approved?  [See here for an example](https://docs.google.com/spreadsheets/d/1N4BTn6knwNNNU8bC4l0ZtDVEB2uBPZ0zNgct2KwNxxI/pubhtml).
+
+Step 7) Publish the Google spreadsheet to the web to make it read only to our javascript
 
 Step 7) Setup a scheduled task to execute aggregator/harvest.rb on a regular basis
