@@ -11,7 +11,7 @@ Installation
 
 Step 1) Add this script to your web page:
 
-    <script type="text/javascript" src="http://rawgit.com/joshrickard/muve-photos/master/web/muve-photos.min.js"></script>
+    <script type="text/javascript" src="//cdn.rawgit.com/joshrickard/muve-photos/master/web/muve-photos.min.js"></script>
 
 
 Step 2) Add a container element and call the init function.  The key is
