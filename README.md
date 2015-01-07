@@ -66,3 +66,16 @@ Step 6) Create a Google spreadsheet with the following columns: source, id, crea
 Step 7) Publish the Google spreadsheet to the web to make it read only to our javascript
 
 Step 8) Setup a scheduled task to execute aggregator/harvest.rb on a regular basis
+
+
+Scheduling with Cron
+=============================
+
+Step 1) Copy the solution to your computer/server
+
+Step 2) Update the aggregator/harvest.sh script with the correct path
+
+Step 3) Open up cron and add a new entry (updating the path)
+
+  env EDITOR=nano crontab -e
+  * */4 * * * cd /Users/josh/dev/muve-photos/aggregator/harvest.sh >> harvest.log 2>&1

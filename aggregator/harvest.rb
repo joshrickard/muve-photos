@@ -23,16 +23,21 @@ instagram = InstagramHarvest.new( config['instagram'] )
 twitter = TwitterHarvest.new( config['twitter'] )
 
 # Search Flickr and update the spreadsheet
+puts "Searching Flickr..."
 flickr.search('vknp1').each do |result|
   spreadsheet.add_new_row(result)
 end
 
 # Search Instagram and update the spreadsheet
+puts "Searching Instagram..."
 instagram.search('vknp1').each do |result|
   spreadsheet.add_new_row(result)
 end
 
 # Search Twitter and update the spreadsheet
+puts "Searching Twitter..."
 twitter.search('vknp1').each do |result|
   spreadsheet.add_new_row(result)
 end
+
+puts "Search complete!"

@@ -34,3 +34,5 @@ build/
 .rvmrc
 config.yml
 
+
+aggregator/harvest.log
