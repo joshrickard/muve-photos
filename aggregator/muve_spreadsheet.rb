@@ -52,7 +52,7 @@ class MuveSpreadsheet
     @worksheet ||= @google_session.spreadsheet_by_key(@spreadsheet_key).worksheets[0]
 
     # don't insert a new row if the media_url is blank or it is a duplicate
-    return if row[:media_url].blank? || is_duplicate?(row[:media_url])
+    return if row[:media_url].blank? || is_duplicate?(row[:source], row[:id])
 
     # insert into the next row
     row_num = @worksheet.num_rows + 1
@@ -69,8 +69,8 @@ class MuveSpreadsheet
   end
 
   private
-    def is_duplicate?(url)
+    def is_duplicate?(source, id)
       # check for duplicates by media_url
-      (1..@worksheet.num_rows).detect {|i| @worksheet[i, 6] == url} != nil
+      (1..@worksheet.num_rows).detect {|i| (@worksheet[i, 1] == source) && (@worksheet[i, 2] == id)} != nil
     end
 end
