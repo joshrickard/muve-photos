@@ -15,8 +15,12 @@
 		    Tabletop.init({
 			    key: config.key,
 			    callback: function(data, tabletop) {
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
             for (var i = 0; i<data.length; i++) {
-              data[i].created_parsed = Date.parse( data[i].created );
+              var d = new Date( data[i].created.substr(0, 10) );
+              data[i].created_date = monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+              data[i].created_parsed = d;
             }
 
             data.sort( function(a, b) {
@@ -53,15 +57,18 @@
         var index = muvePhotos.currentPage * muvePhotos.photosPerPage + i;
         var link = document.getElementById('muve_photo_a_' + i);
         var img = document.getElementById('muve_photo_i_' + i);
+        var caption = document.getElementById('muve_photo_c_' + i);
 
         if (index < muvePhotos.photos.length) {
-          link.href = muvePhotos.photos[index];
+          link.href = muvePhotos.photos[index].mediaurl;
           link.style.display = '';
-          img.src = muvePhotos.photos[index];
+          img.src = muvePhotos.photos[index].mediaurl;
+          caption.innerHTML = muvePhotos.photos[index].created_date;
         } else {
           link.href = '';
           link.style.display = 'none';
           img.src = '';
+          caption.innerHTML = '';
         }
       }
     },
@@ -86,7 +93,8 @@
         container.innerHTML = container.innerHTML +
           "<a href='' id='muve_photo_a_" + i + "' target='_blank'>" +
             "<img class='" + muvePhotos.options.classes + "' id='muve_photo_i_" + i + "' style='" + muvePhotos.options.styles + "' src=''>" +
-          "</a>";
+          "</a>" +
+          "<div id='muve_photo_c_" + i + "' style='padding-left: 4px;'></div>";
       }
 
       // container.innerHTML = container.innerHTML +
@@ -105,7 +113,7 @@
 
 			  // only display the image if it is approved
 			  if ((data[i].approved.toLowerCase() === "yes") && (data[i].hashtag.toLowerCase() === hashtag)) {
-          muvePhotos.photos.push( data[i].mediaurl );
+          muvePhotos.photos.push( data[i] );
 			  }
 		  }
 
