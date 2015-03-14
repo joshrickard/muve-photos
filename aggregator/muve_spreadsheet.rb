@@ -71,6 +71,6 @@ class MuveSpreadsheet
   private
     def is_duplicate?(source, id)
       # check for duplicates by media_url
-      (1..@worksheet.num_rows).detect {|i| (@worksheet[i, 1] == source) && (@worksheet[i, 2] == id)} != nil
+      (1..@worksheet.num_rows).detect {|i| (@worksheet[i, 1].to_s == source.to_s) && (@worksheet[i, 2].to_s == id.to_s)} != nil
     end
 end
