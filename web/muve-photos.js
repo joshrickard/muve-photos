@@ -19,7 +19,7 @@
 
             for (var i = 0; i<data.length; i++) {
               var d = new Date( data[i].created.substr(0, 10) );
-              data[i].created_date = monthNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+              data[i].created_date = monthNames[d.getUTCMonth()] + " " + d.getUTCDate() + ", " + d.getUTCFullYear();
               data[i].created_parsed = d;
             }
 
@@ -73,16 +73,21 @@
       }
     },
 
-    rotate: function() {
+    beginRotation: function() {
       (function(){
-        muvePhotos.currentPage += 1;
-        if (muvePhotos.currentPage > muvePhotos.photos.length - 1)
-          muvePhotos.currentPage = 0;
-
-        muvePhotos.renderPage();
+        MuvePhotos.rotate();
 
         setTimeout(arguments.callee, muvePhotos.rotationDelay);
       })();
+    },
+
+    rotate: function() {
+      console.log('rotate ' + new Date().toString());
+      muvePhotos.currentPage += 1;
+      if (muvePhotos.currentPage > muvePhotos.photos.length - 1)
+        muvePhotos.currentPage = 0;
+
+      muvePhotos.renderPage();
     },
 
     showInfo: function(data, hashtag) {
@@ -92,7 +97,7 @@
       for (i = 0; i < muvePhotos.photosPerPage; i++) {
         container.innerHTML = container.innerHTML +
           "<a href='' id='muve_photo_a_" + i + "' target='_blank'>" +
-            "<img class='" + muvePhotos.options.classes + "' id='muve_photo_i_" + i + "' style='" + muvePhotos.options.styles + "' src=''>" +
+            "<img class='" + muvePhotos.options.classes + "' id='muve_photo_i_" + i + "' onerror='MuvePhotos.rotate(); return false' style='" + muvePhotos.options.styles + "' src=''>" +
           "</a>" +
           "<div id='muve_photo_c_" + i + "' style='padding-left: 4px;'></div>";
       }
@@ -119,7 +124,7 @@
 
       muvePhotos.renderPage();
 
-      setTimeout(muvePhotos.rotate, muvePhotos.rotationDelay);
+      setTimeout(muvePhotos.beginRotation, muvePhotos.rotationDelay);
     }
 
   };
