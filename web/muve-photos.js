@@ -82,7 +82,6 @@
     },
 
     rotate: function() {
-      console.log('rotate ' + new Date().toString());
       muvePhotos.currentPage += 1;
       if (muvePhotos.currentPage > muvePhotos.photos.length - 1)
         muvePhotos.currentPage = 0;
