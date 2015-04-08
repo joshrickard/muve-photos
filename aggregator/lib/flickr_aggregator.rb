@@ -1,5 +1,5 @@
+require 'extensions'
 require 'flickraw'
-require './extensions'
 
 class FlickrAggregator
 
@@ -11,7 +11,7 @@ class FlickrAggregator
   end
 
   def search(hashtags)
-    raise 'hashtag(s) are required to search'
+    raise 'hashtag(s) are required to search' if hashtags.empty?
 
     hashtags = [hashtags] unless hashtags.is_a?(Array)
 
