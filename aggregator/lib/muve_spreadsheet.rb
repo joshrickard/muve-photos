@@ -1,5 +1,5 @@
+require 'extensions'
 require 'google_drive'
-require './extensions'
 
 class MuveSpreadsheet
   CONFIG = 'config.yml'
