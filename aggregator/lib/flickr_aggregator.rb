@@ -1,14 +1,17 @@
 require 'flickraw'
 require './extensions'
 
-class FlickrHarvest
+class FlickrAggregator
+
   def initialize(config)
+    raise 'config key and secret are required' if config.blank? || config['key'].blank? || config['secret'].blank?
+
     FlickRaw.api_key = config['key']
     FlickRaw.shared_secret = config['secret']
   end
 
   def search(hashtags)
-    return [] if hashtags.blank?
+    raise 'hashtag(s) are required to search'
 
     hashtags = [hashtags] unless hashtags.is_a?(Array)
 
@@ -30,4 +33,5 @@ class FlickrHarvest
       end
     end
   end
+
 end
