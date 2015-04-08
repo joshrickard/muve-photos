@@ -4,3 +4,11 @@ gem 'flickraw'
 gem 'google_drive'
 gem 'instagram'
 gem 'twitter'
+
+gem 'rspec'
+
+group :development do
+  gem 'guard-rspec', require: false
+  gem 'quiet_assets'
+  gem 'terminal-notifier-guard'
+end
