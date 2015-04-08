@@ -1,7 +1,7 @@
+require 'extensions'
 require 'instagram'
-require './extensions'
 
-class InstagramHarvest
+class InstagramAggregator
   def initialize(config)
     Instagram.configure do |instagram_config|
       instagram_config.client_id = config['client_id']

@@ -1,7 +1,7 @@
+require 'extensions'
 require 'twitter'
-require './extensions'
 
-class TwitterHarvest
+class TwitterAggregator
   def initialize(config)
     @twitter = Twitter::REST::Client.new do |twitter_config|
       twitter_config.consumer_key = config['consumer_key']
