@@ -3,6 +3,9 @@ require 'twitter'
 
 class TwitterAggregator
   def initialize(config)
+    raise 'config, consumer key, consumer secret, access_token and access_token_secret are required' if
+      config.blank? || %w(consumer_key consumer_secret access_token access_token_secret).any?{|s| config[s].blank?}
+
     @twitter = Twitter::REST::Client.new do |twitter_config|
       twitter_config.consumer_key = config['consumer_key']
       twitter_config.consumer_secret = config['consumer_secret']
@@ -12,7 +15,7 @@ class TwitterAggregator
   end
 
   def search(hashtags)
-    return [] if hashtags.blank?
+    raise 'hashtag(s) are required to search' if hashtags.empty?
 
     hashtags = [hashtags] unless hashtags.is_a?(Array)
 

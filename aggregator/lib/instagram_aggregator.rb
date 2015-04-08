@@ -2,7 +2,10 @@ require 'extensions'
 require 'instagram'
 
 class InstagramAggregator
+
   def initialize(config)
+    raise 'config key and secret are required' if config.blank? || config['client_id'].blank? || config['client_secret'].blank?
+
     Instagram.configure do |instagram_config|
       instagram_config.client_id = config['client_id']
       instagram_config.client_secret = config['client_secret']
@@ -10,7 +13,7 @@ class InstagramAggregator
   end
 
   def search(hashtags)
-    return [] if hashtags.blank?
+    raise 'hashtag(s) are required to search' if hashtags.empty?
 
     hashtags = [hashtags] unless hashtags.is_a?(Array)
 
@@ -31,4 +34,5 @@ class InstagramAggregator
       end
     end
   end
+
 end
